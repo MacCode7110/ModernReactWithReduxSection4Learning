@@ -1,16 +1,28 @@
 import { useState } from 'react'
+import AnimalShow from './AnimalShow'
+
+function getRandomAnimal() {
+    const animals = ['bird', 'cat', 'cow', 'dog', 'gator', 'horse'];
+
+    return animals[Math.floor(Math.random() * animals.length)];
+}
 
 function App() {
-    const [count, setCount] = useState(0);
+    const [animals, setAnimals] = useState([]);
     const handleClick = () => {
-        setCount(count + 1);
-        console.log("Button was clicked");
+        // Never modify a piece of state directly! ALWAYS use the setter function to update a piece of state.
+        // Spread operator spreads all of the entries in a referenced array into entries stored in a new array or collection of elements.
+        setAnimals([...animals, getRandomAnimal()]);
     };
+
+    const renderedAnimals = animals.map((animal, index) => {
+        return <AnimalShow type={animal} key={index} />;
+    });
 
     return (
         <div>
             <button onClick={handleClick}>Add Animal</button>
-            <div>Number of animals: {count}</div>
+            <div>{renderedAnimals}</div>
         </div>
     );
 }
